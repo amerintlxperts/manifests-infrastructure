@@ -1,6 +1,4 @@
-# Use subject to Lacework Terms of Service:
-# https://www.lacework.com/terms/
-# Lacework,” “Polygraph,” and associated logos are the registered trademarks or trademarks of Lacework Inc.
+---
 apiVersion: apps/v1
 
 kind: DaemonSet
@@ -21,7 +19,7 @@ spec:
       labels:
         name: lacework
     spec:
-      tolerations: 
+      tolerations:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
         - key: node-role.kubernetes.io/control-plane
@@ -32,74 +30,74 @@ spec:
       hostPID: true
       hostNetwork: true
       containers:
-      - name: lacework
-        image: lacework/datacollector
-        imagePullPolicy: Always
-        resources:
-          requests:
-            cpu: "200m"
-            memory: "512Mi"
-          limits:
-            cpu: "500m"
-            memory: "1450Mi"
-        securityContext:
-          privileged: true
-        volumeMounts:
-          - name: cfgmap
-            mountPath: /var/lib/lacework/config
-          - name: dev
-            mountPath: /dev
-          - name: sys
-            mountPath: /sys
-          - name: log
-            mountPath: /var/log
-          - name: passwd
-            mountPath: /etc/passwd
-            readOnly: true
-          - name: group
-            mountPath: /etc/group
-            readOnly: true
-          - name: hostlacework
-            mountPath: /var/lib/lacework/collector
-          - name: hostlaceworkcontroller
-            mountPath: /var/lib/lacework/controller
-          - name: hostroot
-            mountPath: /laceworkfim
-            readOnly: true
-          - name: podinfo
-            mountPath: /etc/podinfo
+        - name: lacework
+          image: lacework/datacollector
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1450Mi"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: cfgmap
+              mountPath: /var/lib/lacework/config
+            - name: dev
+              mountPath: /dev
+            - name: sys
+              mountPath: /sys
+            - name: log
+              mountPath: /var/log
+            - name: passwd
+              mountPath: /etc/passwd
+              readOnly: true
+            - name: group
+              mountPath: /etc/group
+              readOnly: true
+            - name: hostlacework
+              mountPath: /var/lib/lacework/collector
+            - name: hostlaceworkcontroller
+              mountPath: /var/lib/lacework/controller
+            - name: hostroot
+              mountPath: /laceworkfim
+              readOnly: true
+            - name: podinfo
+              mountPath: /etc/podinfo
       volumes:
         - name: dev
           hostPath:
-              path: /dev
+            path: /dev
         - name: sys
           hostPath:
-              path: /sys
+            path: /sys
         - name: log
           hostPath:
-              path: /var/log
+            path: /var/log
         - name: passwd
           hostPath:
-              path: /etc/passwd
+            path: /etc/passwd
         - name: group
           hostPath:
-              path: /etc/group
+            path: /etc/group
         - name: hostroot
           hostPath:
-              path: /
+            path: /
         - name: hostlacework
           hostPath:
-              path: /var/lib/lacework/collector
+            path: /var/lib/lacework/collector
         - name: hostlaceworkcontroller
           hostPath:
-              path: /var/lib/lacework/controller
+            path: /var/lib/lacework/controller
         - name: cfgmap
           secret:
             defaultMode: 0640
             secretName: lacework-agent-token
             items:
-            - key: config.json
-              path: config.json
+              - key: config.json
+                path: config.json
         - name: podinfo
           downwardAPI:
             items:
