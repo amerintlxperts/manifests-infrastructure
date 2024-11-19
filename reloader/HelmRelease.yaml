@@ -5,7 +5,7 @@ metadata:
   name: stakater
   namespace: cluster-config
 spec:
-  targetNamespace: default
+  targetNamespace: reloader
   releaseName: reloader
   chart:
     spec:
@@ -13,7 +13,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: stakater
-        namespace: cluster-config
   interval: 10m0s
   install:
     remediation:
