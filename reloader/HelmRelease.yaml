@@ -2,11 +2,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: stakater
+  name: reloader
   namespace: cluster-config
 spec:
   targetNamespace: reloader
-  releaseName: reloader
   chart:
     spec:
       chart: reloader
