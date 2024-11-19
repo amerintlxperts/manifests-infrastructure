@@ -6,3 +6,5 @@ resources:
   - ./fortiweb-ingress
   - ./gpu-operator
   - ./lacework
+  - ./cert-manager
+  - ./reloader
