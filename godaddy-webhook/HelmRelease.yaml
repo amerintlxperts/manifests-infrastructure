@@ -1,0 +1,21 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: acme-webhook
+  namespace: cluster-config
+spec:
+  targetNamespace: cert-manager
+  interval: 30m
+  chart:
+    spec:
+      chart: godaddy-webhook
+      sourceRef:
+        kind: HelmRepository
+        name: godaddy-webhook
+      interval: 12h
+  values:
+    groupName: amerintlxperts.com
+  install:
+    remediation:
+      retries: 3
