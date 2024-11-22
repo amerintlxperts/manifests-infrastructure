@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: godaddy-webhook
-  namespace: cluster-config
-spec:
-  interval: 24h
-  url: https://snowdrop.github.io/godaddy-webhook
