@@ -17,6 +17,11 @@ spec:
       interval: 12h
   values:
     installCRDs: true
+    podLabels:
+      azure.workload.identity/use: "true"
+    serviceAccount:
+      labels:
+        azure.workload.identity/use: "true"
     extraArgs:
       - --dns01-recursive-nameservers-only
       - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
