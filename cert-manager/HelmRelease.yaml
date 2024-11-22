@@ -20,7 +20,7 @@ spec:
     podLabels:
       azure.workload.identity/use: "true"
     serviceAccount:
-      name: cert-manager
+      name: "cert-manager"
       labels:
         azure.workload.identity/use: "true"
     extraArgs:
