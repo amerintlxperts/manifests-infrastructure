@@ -7,5 +7,5 @@ resources:
   - ./gpu-operator
   - ./lacework
   - ./reloader
-    # - ./cert-manager
-    # - ./godaddy-webhook
+  - ./cert-manager
+  - ./godaddy-webhook
