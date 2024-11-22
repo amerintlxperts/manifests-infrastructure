@@ -17,4 +17,4 @@ spec:
           hostedZoneName: amerintlxperts.com
           environment: AzurePublicCloud
           managedIdentity:
-            clientID: f7c727d8-c451-4ff6-9429-1bd319627962
+            clientID: 0262455d-c851-42d2-a919-bf4cf064dfe4
