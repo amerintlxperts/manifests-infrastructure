@@ -6,6 +6,4 @@ resources:
   - ./fortiweb-ingress
   - ./gpu-operator
   - ./lacework
-  - ./cert-manager
-  - ./godaddy-webhook
   - ./reloader
