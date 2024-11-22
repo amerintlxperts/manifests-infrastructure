@@ -5,6 +5,3 @@ resources:
   - namespace.yaml
   - HelmRepository.yaml
   - HelmRelease.yaml
-  - clusterissuer-selfsigned.yaml
-    #- clusterissuer-letsencrypt-staging.yaml
-    #- clusterissuer-letsencrypt-production.yaml
