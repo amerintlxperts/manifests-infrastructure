@@ -9,17 +9,3 @@ spec:
     email: rmordasiewicz@fortinet.com
     privateKeySecretRef:
       name: letsencrypt-staging
-    solvers:
-    - selector:
-        dnsZones:
-        - 'amerintlxperts.com'
-      dns01:
-        webhook:
-          config:
-            apiKeySecretRef:
-              name: godaddy-api-key
-              key: token
-            production: true
-            ttl: 600
-          groupName: amerintlxperts.com
-          solverName: godaddy
