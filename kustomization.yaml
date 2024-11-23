@@ -7,3 +7,4 @@ resources:
   - ./gpu-operator
   - ./lacework
   - ./reloader
+  - ./cert-manager
