@@ -13,8 +13,8 @@ spec:
     - dns01:
         azureDNS:
           resourceGroupName: amerintlxperts
-          subscriptionID: fda770f9-b125-4474-abec-65a1cc1df596
+          subscriptionID: {{ SUBSCRIPTION_ID }}
           hostedZoneName: amerintlxperts.com
           environment: AzurePublicCloud
           managedIdentity:
-            clientID: 0262455d-c851-42d2-a919-bf4cf064dfe4
+            clientID: {{ CLIENT_ID }}
