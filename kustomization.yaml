@@ -4,6 +4,5 @@ kind: Kustomization
 resources:
   - rbac.yaml
   - ./fortiweb-ingress
-  - ./gpu-operator
   - ./lacework
   - ./reloader
