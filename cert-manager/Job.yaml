@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -14,9 +13,10 @@ spec:
             - /bin/sh
             - -c
             - |
-              echo "Lets Encrypt Intermediate"
+              echo "Checking Lets Encrypt Intermediate certificate..."
               while true; do
-                if kubectl get configmap letsencrypt-intermediate -n cert-manager -o jsonpath='{.data.letsencrypt-intermediate\.crt}' | grep -q 'BEGIN CERTIFICATE'; then
+                CERTIFICATE=$(kubectl get configmap letsencrypt-intermediate -n cert-manager -o jsonpath="{.data['letsencrypt-intermediate\.crt']}" 2>/dev/null)
+                if echo "$CERTIFICATE" | grep -q 'BEGIN CERTIFICATE'; then
                   echo "Lets Encrypt Intermediate certificate is ready."
                   exit 0
                 fi
@@ -29,3 +29,4 @@ spec:
               memory: 64Mi
       restartPolicy: Never
   backoffLimit: 4
+
