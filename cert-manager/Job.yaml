@@ -65,5 +65,5 @@ spec:
             requests:
               cpu: 100m
               memory: 64Mi
-      restartPolicy: Never
+      restartPolicy: OnFailure
   backoffLimit: 4
