@@ -16,11 +16,11 @@ spec:
             - |
               echo "Lets Encrypt Intermediate"
               while true; do
-                if kubectl get secret letsencrypt-intermediate -n cert-manager -o jsonpath='{.data.tls\.crt}' | base64 -d | grep -q 'BEGIN CERTIFICATE'; then
-                  echo "Lets Encrypt Intermediate secret is ready."
+                if kubectl get configmap letsencrypt-intermediate -n cert-manager -o jsonpath='{.data.letsencrypt-intermediate\.crt}' | grep -q 'BEGIN CERTIFICATE'; then
+                  echo "Lets Encrypt Intermediate certificate is ready."
                   exit 0
                 fi
-                echo "Lets Encrypt Intermediate secret to be ready..."
+                echo "Waiting for Lets Encrypt Intermediate certificate to be ready..."
                 sleep 5
               done
           resources:
