@@ -6,4 +6,5 @@ resources:
   - HelmRepository.yaml
   - HelmRelease.yaml
   - letsencrypt-intermediate.yaml
+  - rbac.yaml
   - Job.yaml
