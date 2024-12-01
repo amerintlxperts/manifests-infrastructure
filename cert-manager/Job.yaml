@@ -4,7 +4,7 @@ kind: Job
 metadata:
   name: letsencrypt-intermediate-job
   annotations:
-    fluxcd.io/restart: "2024-12-01T12:00:03Z"
+    fluxcd.io/restart: "2024-12-01T12:00:04Z"
   namespace: cert-manager
 spec:
   template:
