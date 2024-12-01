@@ -1,0 +1,31 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: letsencrypt-intermediate
+  namespace: cert-manager
+spec:
+  template:
+    spec:
+      containers:
+        - name: letsencrypt-intermediate
+          image: bitnami/kubectl:latest
+          command:
+            - /bin/sh
+            - -c
+            - |
+              echo "Lets Encrypt Intermediate"
+              while true; do
+                if kubectl get secret letsencrypt-intermediate -n cert-manager -o jsonpath='{.data.tls\.crt}' | base64 -d | grep -q 'BEGIN CERTIFICATE'; then
+                  echo "Lets Encrypt Intermediate secret is ready."
+                  exit 0
+                fi
+                echo "Lets Encrypt Intermediate secret to be ready..."
+                sleep 5
+              done
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+      restartPolicy: Never
+  backoffLimit: 4
