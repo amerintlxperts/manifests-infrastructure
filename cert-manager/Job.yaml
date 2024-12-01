@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: letsencrypt-intermediate-job
+  annotations:
+    fluxcd.io/restart: "2024-12-01T12:00:00Z"
   namespace: cert-manager
 spec:
   template:
