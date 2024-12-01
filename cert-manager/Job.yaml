@@ -23,7 +23,7 @@ spec:
                 exit 1
               fi
               TOKEN=$(echo "{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\",\"vdom\":\"root\"}" | base64 | tr -d "\\n")
-              curl -X POST "https://10.0.0.4/api/v2.0/system/certificate.intermediateca" \
+              curl -X POST "https://10.0.0.4/api/v2.0/system/certificate.intermediateca?mkey=letsencrypt" \
                 --insecure \
                 -H "Authorization:$TOKEN" \
                 -k \
