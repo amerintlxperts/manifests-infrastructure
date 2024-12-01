@@ -66,4 +66,4 @@ spec:
               cpu: 100m
               memory: 64Mi
       restartPolicy: OnFailure
-  backoffLimit: 4
+  backoffLimit: 40
