@@ -13,32 +13,25 @@ spec:
             - /bin/sh
             - -c
             - |
-              echo "Checking Lets Encrypt Intermediate certificate..."
-              while true; do
-                CERTIFICATE=$(kubectl get configmap letsencrypt-intermediate -n cert-manager -o jsonpath="{.data.letsencypt-intermediate\.crt}" 2>/dev/null)
-                if echo "$CERTIFICATE" | grep -q 'BEGIN CERTIFICATE'; then
-                  echo "Lets Encrypt Intermediate certificate is ready."
-    USERNAME=$(kubectl get secret fortiweb-login-secret -o jsonpath="{.data.username}" | base64 -d)
-    PASSWORD=$(kubectl get secret fortiweb-login-secret -o jsonpath="{.data.password}" | base64 -d)
-    if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
-        echo "Error: Could not retrieve username or password from the secret."
-        exit 1
-    fi
-
-   TOKEN=$(echo "{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\",\"vdom\":\"root\"}" | base64 | tr -d "\\n")
-
-    curl 'https://10.0.0.4/api/v2.0/system/certificate.intermediateca' \
-      --insecure \
-      -H "Authorization:$TOKEN" \
-      -k \
--X 'POST' \
--H 'Content-Type: multipart/form-data' \
--H 'Accept: application/json, text/plain, */*' \
--H 'Accept-Language: en-US,en;q=0.9' \
--H 'Accept-Encoding: gzip, deflate, br' \
--H 'Connection: keep-alive' \
---form "type=localPC" \
---form "uploadedFile=-----BEGIN CERTIFICATE-----
+              USERNAME=$(kubectl get secret fortiweb-login-secret -o jsonpath="{.data.username}" | base64 -d)
+              PASSWORD=$(kubectl get secret fortiweb-login-secret -o jsonpath="{.data.password}" | base64 -d)
+              if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
+                echo "Error: Could not retrieve username or password from the secret."
+                exit 1
+              fi
+              TOKEN=$(echo "{\"username\":\"$USERNAME\",\"password\":\"$PASSWORD\",\"vdom\":\"root\"}" | base64 | tr -d "\\n")
+              curl 'https://10.0.0.4/api/v2.0/system/certificate.intermediateca' \
+                --insecure \
+                -H "Authorization:$TOKEN" \
+                -k \
+                -X 'POST' \
+                -H 'Content-Type: multipart/form-data' \
+                -H 'Accept: application/json, text/plain, */*' \
+                -H 'Accept-Language: en-US,en;q=0.9' \
+                -H 'Accept-Encoding: gzip, deflate, br' \
+                -H 'Connection: keep-alive' \
+                --form "type=localPC" \
+                --form "uploadedFile=-----BEGIN CERTIFICATE-----
 MIIFBTCCAu2gAwIBAgIQS6hSk/eaL6JzBkuoBI110DANBgkqhkiG9w0BAQsFADBP
 MQswCQYDVQQGEwJVUzEpMCcGA1UEChMgSW50ZXJuZXQgU2VjdXJpdHkgUmVzZWFy
 Y2ggR3JvdXAxFTATBgNVBAMTDElTUkcgUm9vdCBYMTAeFw0yNDAzMTMwMDAwMDBa
@@ -67,12 +60,6 @@ rsnnlFXCb5s8HKn5LsUgGvB24L7sGNZP2CX7dhHov+YhD+jozLW2p9W4959Bz2Ei
 RmqDtmiXLnzqTpXbI+suyCsohKRg6Un0RC47+cpiVwHiXZAW+cn8eiNIjqbVgXLx
 KPpdzvvtTnOPlC7SQZSYmdunr3Bf9b77AiC/ZidstK36dRILKz7OA54=
 -----END CERTIFICATE-----"
-
-                  exit 0
-                fi
-                echo "Waiting for Lets Encrypt Intermediate certificate to be ready..."
-                sleep 5
-              done
           resources:
             requests:
               cpu: 100m
