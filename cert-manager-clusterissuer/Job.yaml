@@ -4,7 +4,8 @@ kind: Job
 metadata:
   name: clusterissuer
   annotations:
-    fluxcd.io/restart: "2024-12-01T12:00:08Z"
+    fluxcd.io/restart: "2024-12-01T12:00:09Z"
+    re-run-timestamp: "2024-12-01T12:00:09Z"
   namespace: cert-manager
 spec:
   template:
