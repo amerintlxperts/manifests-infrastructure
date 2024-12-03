@@ -19,7 +19,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   namespace: cert-manager
-  name: default-serviceaccount-reader-binding
+  name: configmap-and-secret-reader-binding
 subjects:
   - kind: ServiceAccount
     name: default
@@ -33,7 +33,9 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: svc-reader
+  name: cert-manager-cluster-roles
+  labels:
+    app.kubernetes.io/name: cert-manager
 rules:
   - apiGroups: [""]
     resources:
@@ -42,18 +44,30 @@ rules:
       - get
       - list
       - watch
+  - apiGroups: ["cert-manager.io"]
+    resources:
+      - clusterissuers
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - delete
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: cert-manager-serviceaccount-clusterreader-binding
+  name: cert-manager-cluster-roles-binding
+  labels:
+    app.kubernetes.io/name: cert-manager
 subjects:
   - kind: ServiceAccount
     name: default
     namespace: cert-manager
 roleRef:
   kind: ClusterRole
-  name: svc-reader
+  name: cert-manager-cluster-roles
   apiGroup: rbac.authorization.k8s.io
 
