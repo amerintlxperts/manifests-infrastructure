@@ -4,14 +4,14 @@ kind: Job
 metadata:
   name: clusterissuer
   annotations:
-    fluxcd.io/restart: "2024-12-01T12:00:04Z"
+    fluxcd.io/restart: "2024-12-01T12:00:05Z"
   namespace: cert-manager
 spec:
   template:
     spec:
+      restartPolicy: OnFailure
       containers:
         - name: clusterissuer
-          restartPolicy: OnFailure
           image: alpine/k8s:1.30.6
           command:
             - /bin/sh
