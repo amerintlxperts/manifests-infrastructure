@@ -44,5 +44,4 @@ spec:
                         environment: "AzurePublicCloud"
                         managedIdentity:
                           clientID: "${clientID}"
-                  enableIssuerChainFetching: true
               EOF
