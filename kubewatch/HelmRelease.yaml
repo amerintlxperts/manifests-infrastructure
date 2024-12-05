@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubewatch
+  namespace: cluster-config
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: kubewatch
+      version: '*'
+      sourceRef:
+        kind: HelmRepository
+        name: kubewatch-repo
+        namespace: cluster-config
+  values:
+    rbac:
+      create: true
+    namespaceToWatch: "" # Leave empty to watch all namespaces
+    resourcesToWatch:
+      pod: true
+      daemonset: true
+      deployment: false
+      replicaset: false
+      job: false
+      services: true
+      configmap: false
+      secret: false
+      event: true

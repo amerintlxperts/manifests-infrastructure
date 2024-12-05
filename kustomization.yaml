@@ -7,3 +7,4 @@ resources:
   - ./lacework
   - ./reloader
   - ./cert-manager
+  - ./kubewatch

@@ -1,0 +1,56 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cert-manager-cluster-admin
+  labels:
+    app.kubernetes.io/name: cert-manager
+rules:
+  # Permissions for ConfigMaps and Secrets
+  - apiGroups: [""]
+    resources:
+      - configmaps
+      - secrets
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Permissions for Services
+  - apiGroups: [""]
+    resources:
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+
+  # Permissions for ClusterIssuers
+  - apiGroups: ["cert-manager.io"]
+    resources:
+      - clusterissuers
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cert-manager-cluster-admin-binding
+  labels:
+    app.kubernetes.io/name: cert-manager
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: cert-manager
+roleRef:
+  kind: ClusterRole
+  name: cert-manager-cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
