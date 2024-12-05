@@ -6,8 +6,8 @@ metadata:
   namespace: cluster-config
 spec:
   interval: 5m
-  targetNamespace: ollama
-  releaseName: ollama
+  targetNamespace: kubewatch
+  releaseName: kubewatch
   chart:
     spec:
       chart: kubewatch
