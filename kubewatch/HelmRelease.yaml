@@ -23,3 +23,9 @@ spec:
     resourcesToWatch:
       ingress: true
       services: true
+    config:
+      handler:
+        webhook:
+        enabled: true
+        url: "http://kubewatch.webhook-handler.svc.cluster.local:8080/hook"
+
