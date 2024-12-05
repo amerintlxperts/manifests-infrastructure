@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: kubewatch
-      version: '*'
+      version: "3.5.0"
       sourceRef:
         kind: HelmRepository
         name: kubewatch-repo
@@ -19,7 +19,7 @@ spec:
   values:
     rbac:
       create: true
-    namespaceToWatch: "" # Leave empty to watch all namespaces
+    namespaceToWatch: ""
     resourcesToWatch:
       ingress: true
       services: true
