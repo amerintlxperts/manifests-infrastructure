@@ -14,7 +14,7 @@ spec:
       version: "3.5.0"
       sourceRef:
         kind: HelmRepository
-        name: kubewatch-repo
+        name: kubewatch
         namespace: cluster-config
   values:
     rbac:
@@ -27,5 +27,5 @@ spec:
       handler:
         webhook:
         enabled: true
-        url: "http://kubewatch.webhook-handler.svc.cluster.local:8080/hook"
+        url: "http://kubewatch.webhook.svc.cluster.local:8080/hook"
 
