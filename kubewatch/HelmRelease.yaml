@@ -21,12 +21,5 @@ spec:
       create: true
     namespaceToWatch: "" # Leave empty to watch all namespaces
     resourcesToWatch:
-      pod: true
-      daemonset: true
-      deployment: false
-      replicaset: false
-      job: false
+      ingress: true
       services: true
-      configmap: false
-      secret: false
-      event: true
