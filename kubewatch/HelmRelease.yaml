@@ -21,8 +21,24 @@ spec:
       create: true
     namespaceToWatch: "docs"
     resourcesToWatch:
-      ingress: true
+      deployment: false
+      replicationcontroller: false
+      replicaset: false
+      daemonset: false
       services: true
+      pod: false
+      job: false
+      node: false
+      clusterrole: false
+      clusterrolebinding: false
+      serviceaccount: false
+      persistentvolume: false
+      namespace: false
+      secret: false
+      configmap: false
+      ingress: true
+      coreevent: false
+      event: false
     config:
       handler:
         webhook:
