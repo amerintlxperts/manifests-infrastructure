@@ -20,27 +20,27 @@ spec:
     slack:
       enabled: false
     rbac:
-      create: true
-    namespaceToWatch: "fortiweb-ingress"
+      create: false
+    namespaceToWatch: ""
     resourcesToWatch:
-      deployment: true
-      replicationcontroller: true
-      replicaset: true
-      daemonset: true
-      services: true
-      pod: true
-      job: true
-      node: true
-      clusterrole: true
-      clusterrolebinding: true
-      serviceaccount: true
-      persistentvolume: true
-      namespace: true
-      secret: true
-      configmap: true
+      deployment: false
+      replicationcontroller: false
+      replicaset: false
+      daemonset: false
+      services: false
+      pod: false
+      job: false
+      node: false
+      clusterrole: false
+      clusterrolebinding: false
+      serviceaccount: false
+      persistentvolume: false
+      namespace: false
+      secret: false
+      configmap: false
       ingress: true
-      coreevent: true
-      event: true
+      coreevent: false
+      event: false
     webhook:
       enabled: true
       url: "http://webhook.webhook.svc.cluster.local:8080/hook"
