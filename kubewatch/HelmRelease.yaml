@@ -27,5 +27,5 @@ spec:
       handler:
         webhook:
         enabled: true
-        url: "http://kubewatch.webhook.svc.cluster.local:8080/hook"
+        url: "http://webhook.webhook.svc.cluster.local:8080/hook"
 
