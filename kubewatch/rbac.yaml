@@ -16,8 +16,8 @@ rules:
       - persistentvolumeclaims
       - endpoints
       - replicationcontrollers
-      - serviceaccounts  # Added serviceaccounts
-      - nodes  # Added nodes
+      - serviceaccounts
+      - nodes
     verbs: ["get", "list", "watch"]
 
   # Apps API group resources
@@ -32,7 +32,7 @@ rules:
   # Networking API group resources
   - apiGroups: ["networking.k8s.io"]
     resources:
-      - ingresses
+      - ingresses  # Ensure full access to ingress resources
     verbs: ["get", "list", "watch"]
 
   # Events API group resources
@@ -78,3 +78,4 @@ subjects:
   - kind: ServiceAccount
     name: kubewatch
     namespace: kubewatch
+
