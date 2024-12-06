@@ -1,56 +1,35 @@
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: cert-manager-cluster-admin
-  labels:
-    app.kubernetes.io/name: cert-manager
+  name: kubewatch
 rules:
-  # Permissions for ConfigMaps and Secrets
-  - apiGroups: [""]
+  - apiGroups: ["", "apps"]
     resources:
+      - pods
+      - services
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
       - configmaps
       - secrets
-    verbs:
-      - get
-      - list
-      - watch
-
-  # Permissions for Services
-  - apiGroups: [""]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["events.k8s.io"]
     resources:
-      - services
-    verbs:
-      - get
-      - list
-      - watch
-
-  # Permissions for ClusterIssuers
-  - apiGroups: ["cert-manager.io"]
-    resources:
-      - clusterissuers
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
+      - events
+    verbs: ["get", "list", "watch"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: cert-manager-cluster-admin-binding
-  labels:
-    app.kubernetes.io/name: cert-manager
+  name: kubewatch
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubewatch
 subjects:
   - kind: ServiceAccount
-    name: default
-    namespace: cert-manager
-roleRef:
-  kind: ClusterRole
-  name: cert-manager-cluster-admin
-  apiGroup: rbac.authorization.k8s.io
+    name: kubewatch
+    namespace: kubewatch
 
