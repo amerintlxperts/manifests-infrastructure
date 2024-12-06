@@ -21,26 +21,26 @@ spec:
       enabled: false
     rbac:
       create: true
-    namespaceToWatch: "docs"
+    namespaceToWatch: "fortiweb-ingress"
     resourcesToWatch:
-      deployment: false
-      replicationcontroller: false
-      replicaset: false
-      daemonset: false
+      deployment: true
+      replicationcontroller: true
+      replicaset: true
+      daemonset: true
       services: true
-      pod: false
-      job: false
-      node: false
-      clusterrole: false
-      clusterrolebinding: false
-      serviceaccount: false
-      persistentvolume: false
-      namespace: false
-      secret: false
-      configmap: false
+      pod: true
+      job: true
+      node: true
+      clusterrole: true
+      clusterrolebinding: true
+      serviceaccount: true
+      persistentvolume: true
+      namespace: true
+      secret: true
+      configmap: true
       ingress: true
-      coreevent: false
-      event: false
+      coreevent: true
+      event: true
     webhook:
       enabled: true
       url: "http://webhook.webhook.svc.cluster.local:8080/hook"
