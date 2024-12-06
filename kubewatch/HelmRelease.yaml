@@ -19,7 +19,7 @@ spec:
   values:
     rbac:
       create: true
-    namespaceToWatch: ""
+    namespaceToWatch: "docs"
     resourcesToWatch:
       ingress: true
       services: true
