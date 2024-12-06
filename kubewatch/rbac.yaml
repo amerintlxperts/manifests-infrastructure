@@ -13,9 +13,13 @@ rules:
       - secrets
       - namespaces
       - persistentvolumes
+      - persistentvolumeclaims
+      - endpoints
       - replicationcontrollers
+      - serviceaccounts  # Added serviceaccounts
+      - nodes  # Added nodes
     verbs: ["get", "list", "watch"]
-  
+
   # Apps API group resources
   - apiGroups: ["apps"]
     resources:
@@ -48,25 +52,6 @@ rules:
   - apiGroups: ["batch"]
     resources:
       - jobs
-    verbs: ["get", "list", "watch"]
-
-  # Add additional required resources
-  # PersistentVolumeClaim (PVC) for volumes
-  - apiGroups: [""]
-    resources:
-      - persistentvolumeclaims
-    verbs: ["get", "list", "watch"]
-
-  # Endpoint for services
-  - apiGroups: [""]
-    resources:
-      - endpoints
-    verbs: ["get", "list", "watch"]
-
-  # Nodes for cluster-wide operations
-  - apiGroups: [""]
-    resources:
-      - nodes
     verbs: ["get", "list", "watch"]
 
   # Horizontal Pod Autoscaler
