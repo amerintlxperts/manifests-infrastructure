@@ -10,15 +10,8 @@ spec:
   chart:
     spec:
       chart: webhook
-      version: "1.0.0"
+      version: "1.0.1"
       sourceRef:
         kind: HelmRepository
         name: webhook
         namespace: cluster-config
-  values:
-    image:
-      repository: ghcr.io/amerintlxperts/webhook
-      tag: "latest"
-    service:
-      port: 8080
-
