@@ -29,10 +29,10 @@ rules:
       - statefulsets
     verbs: ["get", "list", "watch"]
 
-  # Networking API group resources
+  # Networking API group resources (adjusted for `ingresses`)
   - apiGroups: ["networking.k8s.io"]
     resources:
-      - ingresses  # Ensure full access to ingress resources
+      - ingresses
     verbs: ["get", "list", "watch"]
 
   # Events API group resources
@@ -64,6 +64,13 @@ rules:
   - apiGroups: ["apiextensions.k8s.io"]
     resources:
       - customresourcedefinitions
+    verbs: ["get", "list", "watch"]
+
+  # Metrics-related resources
+  - apiGroups: [""]
+    resources:
+      - nodes/stats
+      - nodes/metrics
     verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
