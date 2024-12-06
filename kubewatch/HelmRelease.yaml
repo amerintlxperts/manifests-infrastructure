@@ -17,6 +17,8 @@ spec:
         name: kubewatch
         namespace: cluster-config
   values:
+    slack:
+      enabled: false
     rbac:
       create: true
     namespaceToWatch: "docs"
@@ -39,8 +41,6 @@ spec:
       ingress: true
       coreevent: false
       event: false
-    config:
-      handler:
-        webhook:
-        enabled: true
-        url: "http://webhook.webhook.svc.cluster.local:8080/hook"
+    webhook:
+      enabled: true
+      url: "http://webhook.webhook.svc.cluster.local:8080/hook"
