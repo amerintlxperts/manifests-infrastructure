@@ -23,7 +23,7 @@ metadata:
   namespace: cluster-config
 spec:
   interval: 5m
-  argetNamespace: ingress-helper
+  targetNamespace: ingress-helper
   releaseName: kubewatch
   chart:
     spec:
