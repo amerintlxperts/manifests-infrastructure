@@ -1,21 +1,27 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ingress-viewer-global
+  name: ingress-and-secrets-viewer-global
 rules:
+  # Permissions for ingress resources
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for secrets
+  - apiGroups: [""]
+    resources: ["secrets"]
     verbs: ["get", "list", "watch"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ingress-viewer-global-binding
+  name: ingress-and-secrets-viewer-global-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ingress-viewer-global
+  name: ingress-and-secrets-viewer-global
 subjects:
   - kind: ServiceAccount
     name: default
