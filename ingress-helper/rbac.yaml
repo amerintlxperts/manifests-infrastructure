@@ -9,11 +9,6 @@ rules:
     resources: ["ingresses"]
     verbs: ["get", "list", "watch"]
 
-  # Optional: Permissions for secrets if needed across namespaces
-  - apiGroups: [""]
-    resources: ["secrets"]
-    verbs: ["get", "list", "watch"]
-
   # Optional: Permissions for other resources across all namespaces
   - apiGroups: [""]
     resources:
@@ -36,5 +31,6 @@ roleRef:
   name: ingress-reader-cluster-role
 subjects:
   - kind: ServiceAccount
-    name: default # Updated to match the error message's ServiceAccount
+    name: kubewatch # Correct ServiceAccount name
     namespace: ingress-helper
+
