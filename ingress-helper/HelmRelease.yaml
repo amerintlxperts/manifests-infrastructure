@@ -61,5 +61,3 @@ spec:
     webhook:
       enabled: true
       url: "http://webhook.ingress-helper.svc.cluster.local:8080/hook"
-    serviceAccount:
-      name: "kubewatch"
