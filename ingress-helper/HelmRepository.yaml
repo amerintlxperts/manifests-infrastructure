@@ -1,0 +1,19 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: webhook
+  namespace: cluster-config
+spec:
+  interval: 1h
+  url: https://amerintlxperts.github.io/webhook/
+
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: kubewatch
+  namespace: cluster-config
+spec:
+  url: https://robusta-charts.storage.googleapis.com
+  interval: 1h

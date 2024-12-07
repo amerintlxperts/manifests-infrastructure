@@ -1,0 +1,117 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ingress-and-secrets-viewer-global
+rules:
+  # Permissions for ingress resources
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for secrets
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ingress-and-secrets-viewer-global-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-and-secrets-viewer-global
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: ingress-helper
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ingress-helper
+rules:
+  # Core API group resources
+  - apiGroups: [""]
+    resources:
+      - pods
+      - services
+      - configmaps
+      - secrets
+      - namespaces
+      - persistentvolumes
+      - persistentvolumeclaims
+      - endpoints
+      - replicationcontrollers
+      - serviceaccounts
+      - nodes
+    verbs: ["get", "list", "watch"]
+
+  # Apps API group resources
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs: ["get", "list", "watch"]
+
+  # Networking API group resources (adjusted for `ingresses`)
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+
+  # Events API group resources
+  - apiGroups: ["events.k8s.io", ""]
+    resources:
+      - events
+    verbs: ["get", "list", "watch"]
+
+  # RBAC API group resources
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources:
+      - clusterroles
+      - clusterrolebindings
+    verbs: ["get", "list", "watch"]
+
+  # Batch API group resources
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+    verbs: ["get", "list", "watch"]
+
+  # Horizontal Pod Autoscaler
+  - apiGroups: ["autoscaling"]
+    resources:
+      - horizontalpodautoscalers
+    verbs: ["get", "list", "watch"]
+
+  # Custom Resource Definitions (CRDs)
+  - apiGroups: ["apiextensions.k8s.io"]
+    resources:
+      - customresourcedefinitions
+    verbs: ["get", "list", "watch"]
+
+  # Metrics-related resources
+  - apiGroups: [""]
+    resources:
+      - nodes/stats
+      - nodes/metrics
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ingress-helper
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-helper
+subjects:
+  - kind: ServiceAccount
+    name: ingress-helper
+    namespace: ingress-helper
+

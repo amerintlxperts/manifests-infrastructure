@@ -7,5 +7,6 @@ resources:
   - ./lacework
   - ./reloader
   - ./cert-manager
-  - ./kubewatch
-  - ./webhook
+  - ./ingress-helper
+    # - ./kubewatch
+    # - ./webhook
