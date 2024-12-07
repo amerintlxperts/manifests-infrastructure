@@ -1,20 +1,20 @@
-# ClusterRole for cluster-wide permissions
+# ClusterRole for accessing Ingress resources across all namespaces
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: ingress-helper-cluster-role
+  name: ingress-reader-cluster-role
 rules:
-  # Permissions for ingress resources
+  # Permissions for ingress resources across all namespaces
   - apiGroups: ["networking.k8s.io"]
     resources: ["ingresses"]
     verbs: ["get", "list", "watch"]
 
-  # Permissions for secrets (optional, if needed across namespaces)
+  # Optional: Permissions for secrets if needed across namespaces
   - apiGroups: [""]
     resources: ["secrets"]
     verbs: ["get", "list", "watch"]
 
-  # Core API group resources (if needed at cluster scope)
+  # Optional: Permissions for other resources across all namespaces
   - apiGroups: [""]
     resources:
       - pods
@@ -25,60 +25,15 @@ rules:
     verbs: ["get", "list", "watch"]
 
 ---
-# ClusterRoleBinding for associating the ClusterRole with the ServiceAccount
+# ClusterRoleBinding to associate the ClusterRole with the ServiceAccount
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ingress-helper-cluster-rolebinding
+  name: ingress-reader-cluster-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ingress-helper-cluster-role
-subjects:
-  - kind: ServiceAccount
-    name: kubewatch
-    namespace: ingress-helper
-
----
-# Namespace-scoped Role for additional resources within ingress-helper namespace
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: ingress-helper-role
-  namespace: ingress-helper
-rules:
-  # Permissions for core resources in namespace
-  - apiGroups: [""]
-    resources:
-      - pods
-      - services
-      - configmaps
-      - endpoints
-    verbs: ["get", "list", "watch"]
-
-  # Permissions for apps resources in namespace
-  - apiGroups: ["apps"]
-    resources:
-      - deployments
-      - replicasets
-    verbs: ["get", "list", "watch"]
-
-  # Permissions for events in namespace
-  - apiGroups: ["events.k8s.io", ""]
-    resources: ["events"]
-    verbs: ["get", "list", "watch"]
-
----
-# Namespace-scoped RoleBinding to associate Role with ServiceAccount
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: ingress-helper-rolebinding
-  namespace: ingress-helper
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: ingress-helper-role
+  name: ingress-reader-cluster-role
 subjects:
   - kind: ServiceAccount
     name: kubewatch
