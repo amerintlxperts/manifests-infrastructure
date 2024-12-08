@@ -1,9 +1,0 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: HelmRepository
-metadata:
-  name: webhook
-  namespace: cluster-config
-spec:
-  interval: 1h
-  url: https://amerintlxperts.github.io/webhook/
-

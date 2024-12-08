@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: kubewatch
-  namespace: cluster-config
-spec:
-  url: https://robusta-charts.storage.googleapis.com
-  interval: 1h

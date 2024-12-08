@@ -8,5 +8,3 @@ resources:
   - ./reloader
   - ./cert-manager
   - ./ingress-helper
-    # - ./kubewatch
-    # - ./webhook
