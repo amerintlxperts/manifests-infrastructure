@@ -37,7 +37,7 @@ spec:
     slack:
       enabled: false
     rbac:
-      create: false
+      create: true
     namespaceToWatch: ""
     resourcesToWatch:
       deployment: false
