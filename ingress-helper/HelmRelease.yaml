@@ -8,11 +8,6 @@ spec:
   targetNamespace: ingress-helper
   releaseName: webhook
   chart:
-    tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
     spec:
       chart: webhook
       version: 1.0.1
@@ -21,6 +16,11 @@ spec:
         name: webhook
         namespace: cluster-config
   values:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
       system-pool: "true"
     affinity: # Additional affinity rules
@@ -43,11 +43,6 @@ spec:
   targetNamespace: ingress-helper
   releaseName: kubewatch
   chart:
-    tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
     spec:
       chart: kubewatch
       version: "3.5.0"
@@ -56,6 +51,11 @@ spec:
         name: kubewatch
         namespace: cluster-config
   values:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
       system-pool: "true"
     affinity: # Additional affinity rules

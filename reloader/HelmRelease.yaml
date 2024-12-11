@@ -5,16 +5,8 @@ metadata:
   name: reloader
   namespace: cluster-config
 spec:
-  selector:
-    matchLabels:
-      system-pool: "true"
   targetNamespace: reloader
   chart:
-    tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
     spec:
       chart: reloader
       sourceRef:
@@ -25,6 +17,11 @@ spec:
     remediation:
       retries: 3
   values:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
       system-pool: "true"
     affinity: # Additional affinity rules
