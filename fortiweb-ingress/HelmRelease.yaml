@@ -16,6 +16,12 @@ spec:
         namespace: cluster-config
       version: "2.0.1"
   interval: 10m0s
+  values:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
   install:
     remediation:
       retries: 3

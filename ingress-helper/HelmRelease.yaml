@@ -8,6 +8,11 @@ spec:
   targetNamespace: ingress-helper
   releaseName: webhook
   chart:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     spec:
       chart: webhook
       version: 1.0.1
@@ -26,6 +31,11 @@ spec:
   targetNamespace: ingress-helper
   releaseName: kubewatch
   chart:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     spec:
       chart: kubewatch
       version: "3.5.0"
