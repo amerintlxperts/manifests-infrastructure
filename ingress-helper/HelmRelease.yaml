@@ -4,9 +4,6 @@ metadata:
   name: webhook
   namespace: cluster-config
 spec:
-  selector:
-    matchLabels:
-      system-pool: "true"
   interval: 5m
   targetNamespace: ingress-helper
   releaseName: webhook
@@ -23,6 +20,18 @@ spec:
         kind: HelmRepository
         name: webhook
         namespace: cluster-config
+  values:
+    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+      system-pool: "true"
+    affinity: # Additional affinity rules
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "In"
+                  values:
+                    - "true"
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -30,9 +39,6 @@ metadata:
   name: kubewatch
   namespace: cluster-config
 spec:
-  selector:
-    matchLabels:
-      system-pool: "true"
   interval: 5m
   targetNamespace: ingress-helper
   releaseName: kubewatch
@@ -50,6 +56,17 @@ spec:
         name: kubewatch
         namespace: cluster-config
   values:
+    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+      system-pool: "true"
+    affinity: # Additional affinity rules
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "In"
+                  values:
+                    - "true"
     slack:
       enabled: false
     rbac:
