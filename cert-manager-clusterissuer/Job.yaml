@@ -8,16 +8,20 @@ metadata:
     re-run-timestamp: "2024-12-01T12:00:09Z"
   namespace: cert-manager
 spec:
-  selector:
-    matchLabels:
-      system-pool: "true"
   template:
-    tolerations:
-      - key: "CriticalAddonsOnly"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
+    metadata:
+      labels:
+        app: clusterissuer
     spec:
+      tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+        - key: "node-role.kubernetes.io/control-plane"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/master"
+          effect: "NoSchedule"
+      nodeSelector:
+        node-pool: "system"
       restartPolicy: OnFailure
       containers:
         - name: clusterissuer
