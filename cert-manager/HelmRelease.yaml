@@ -28,8 +28,13 @@ spec:
         operator: "Equal"
         value: "true"
         effect: "NoSchedule"
-    nodeSelector:
-      node-role.kubernetes.io/system: "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "CriticalAddonsOnly"
+                  operator: "Exists"
     extraArgs:
       - --dns01-recursive-nameservers-only
       - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
