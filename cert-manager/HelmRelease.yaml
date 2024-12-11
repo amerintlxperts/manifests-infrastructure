@@ -5,6 +5,9 @@ metadata:
   name: cert-manager
   namespace: cluster-config
 spec:
+  selector:
+    matchLabels:
+      system-pool: "true"
   targetNamespace: cert-manager
   interval: 30m
   chart:

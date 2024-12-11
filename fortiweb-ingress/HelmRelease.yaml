@@ -5,6 +5,9 @@ metadata:
   name: fortiweb-ingress-controller
   namespace: cluster-config
 spec:
+  selector:
+    matchLabels:
+      system-pool: "true"
   targetNamespace: fortiweb-ingress
   releaseName: fortiweb-ingress-controller
   chart:

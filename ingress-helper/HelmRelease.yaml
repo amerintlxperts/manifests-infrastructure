@@ -4,6 +4,9 @@ metadata:
   name: webhook
   namespace: cluster-config
 spec:
+  selector:
+    matchLabels:
+      system-pool: "true"
   interval: 5m
   targetNamespace: ingress-helper
   releaseName: webhook

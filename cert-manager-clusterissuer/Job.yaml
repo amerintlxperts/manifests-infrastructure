@@ -8,7 +8,15 @@ metadata:
     re-run-timestamp: "2024-12-01T12:00:09Z"
   namespace: cert-manager
 spec:
+  selector:
+    matchLabels:
+      system-pool: "true"
   template:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
     spec:
       restartPolicy: OnFailure
       containers:
