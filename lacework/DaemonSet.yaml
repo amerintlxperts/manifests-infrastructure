@@ -20,26 +20,42 @@ spec:
         name: lacework
     spec:
       tolerations:
+        # Allow scheduling on GPU pool
+        - key: nvidia.com/gpu
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+        # Allow scheduling on system pool
+        - key: CriticalAddonsOnly
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+        # Tolerate generic taints
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
         - key: node-role.kubernetes.io/control-plane
           effect: NoSchedule
         - key: node-role.kubernetes.io/infra
           effect: NoSchedule
-        - key: nvidia.com/gpu
-          operator: Exists
-          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: agentpool
+                  - key: kubernetes.io/role
                     operator: In
                     values:
-                      - gpu
+                      - system # Adjust this key/value based on your system pool's label
+              - matchExpressions:
+                  - key: node.kubernetes.io/instance-type
+                    operator: In
+                    values:
+                      - gpu # Adjust this key/value based on your GPU pool's label
+              - matchExpressions:
+                  - key: workload-type
+                    operator: In
+                    values:
                       - cpu
-                      - system
       terminationGracePeriodSeconds: 20
       hostPID: true
       hostNetwork: true
