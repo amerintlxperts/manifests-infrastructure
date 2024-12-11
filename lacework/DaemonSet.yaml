@@ -26,6 +26,20 @@ spec:
           effect: NoSchedule
         - key: node-role.kubernetes.io/infra
           effect: NoSchedule
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: agentpool
+                    operator: In
+                    values:
+                      - gpu
+                      - cpu
+                      - system
       terminationGracePeriodSeconds: 20
       hostPID: true
       hostNetwork: true
