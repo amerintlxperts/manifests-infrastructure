@@ -30,6 +30,9 @@ metadata:
   name: kubewatch
   namespace: cluster-config
 spec:
+  selector:
+    matchLabels:
+      system-pool: "true"
   interval: 5m
   targetNamespace: ingress-helper
   releaseName: kubewatch
