@@ -24,3 +24,15 @@ spec:
   install:
     remediation:
       retries: 3
+  values:
+    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+      system-pool: "true"
+    affinity: # Additional affinity rules
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "In"
+                  values:
+                    - "true"
