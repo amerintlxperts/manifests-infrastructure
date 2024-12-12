@@ -29,6 +29,15 @@ spec:
         effect: "NoSchedule"
     nodeSelector:
       nvidia.com/gpu: "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "NotIn"
+                  values:
+                    - "true"
     driver.enabled: true
     toolkit.enabled: true
     operator.runtimeClass: "nvidia-container-runtime"
