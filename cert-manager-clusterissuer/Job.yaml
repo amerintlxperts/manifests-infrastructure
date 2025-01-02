@@ -1,0 +1,56 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clusterissuer
+  annotations:
+    fluxcd.io/restart: "2024-12-01T12:00:09Z"
+    re-run-timestamp: "2024-12-01T12:00:09Z"
+  namespace: cert-manager
+spec:
+  template:
+    metadata:
+      labels:
+        app: clusterissuer
+    spec:
+      tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Exists"
+          effect: "NoSchedule"
+      nodeSelector:
+        system-pool: "true"
+      restartPolicy: OnFailure
+      containers:
+        - name: clusterissuer
+          image: alpine/k8s:1.30.6
+          command:
+            - /bin/sh
+            - -c
+            - |
+              clientID=$(kubectl get secret clusterissuer -o jsonpath="{.data.clientID}" | base64 -d)
+              email=$(kubectl get secret clusterissuer -o jsonpath="{.data.email}" | base64 -d)
+              hostedZoneName=$(kubectl get secret clusterissuer -o jsonpath="{.data.hostedZoneName}" | base64 -d)
+              resourceGroupName=$(kubectl get secret clusterissuer -o jsonpath="{.data.resourceGroupName}" | base64 -d)
+              server=$(kubectl get secret clusterissuer -o jsonpath="{.data.server}" | base64 -d)
+              subscriptionID=$(kubectl get secret clusterissuer -o jsonpath="{.data.subscriptionID}" | base64 -d)
+              cat <<EOF | kubectl apply -f -
+              apiVersion: cert-manager.io/v1
+              kind: ClusterIssuer
+              metadata:
+                name: letsencrypt
+              spec:
+                acme:
+                  server: "${server}"
+                  email: "${email}"
+                  privateKeySecretRef:
+                    name: "letsencrypt"
+                  solvers:
+                  - dns01:
+                      azureDNS:
+                        resourceGroupName: "${resourceGroupName}"
+                        subscriptionID: "${subscriptionID}"
+                        hostedZoneName: "${hostedZoneName}"
+                        environment: "AzurePublicCloud"
+                        managedIdentity:
+                          clientID: "${clientID}"
+              EOF

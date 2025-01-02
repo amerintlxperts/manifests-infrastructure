@@ -23,6 +23,22 @@ spec:
       name: "cert-manager"
       labels:
         azure.workload.identity/use: "true"
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+      system-pool: "true"
+    affinity: # Additional affinity rules
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "In"
+                  values:
+                    - "true"
     extraArgs:
       - --dns01-recursive-nameservers-only
       - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53

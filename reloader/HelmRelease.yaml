@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: reloader
@@ -16,3 +16,20 @@ spec:
   install:
     remediation:
       retries: 3
+  values:
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+      system-pool: "true"
+    affinity: # Additional affinity rules
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "In"
+                  values:
+                    - "true"

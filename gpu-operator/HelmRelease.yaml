@@ -1,11 +1,11 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: gpu-operator
   namespace: cluster-config
 spec:
-  targetNamespace: cluster-config
+  targetNamespace: gpu-operator
   releaseName: gpu-operator
   chart:
     spec:
@@ -22,6 +22,22 @@ spec:
   upgrade:
     timeout: 20m
   values:
-    driver.enabled: false
-    toolkit.enabled: false
+    tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+    nodeSelector:
+      nvidia.com/gpu: "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "system-pool"
+                  operator: "NotIn"
+                  values:
+                    - "true"
+    driver.enabled: true
+    toolkit.enabled: true
     operator.runtimeClass: "nvidia-container-runtime"

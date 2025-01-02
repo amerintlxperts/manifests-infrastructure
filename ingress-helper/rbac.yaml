@@ -1,0 +1,55 @@
+# ClusterRole for accessing Ingress and other resources across all namespaces
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ingress-helper-cluster-role
+rules:
+  # Permissions for ingress resources across all namespaces
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch"]
+
+  # Permissions for secrets (required by fortiweb-login-secret)
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list"]
+
+  # Permissions for other resources across all namespaces (optional based on needs)
+  - apiGroups: [""]
+    resources:
+      - pods
+      - services
+      - configmaps
+      - namespaces
+      - endpoints
+    verbs: ["get", "list", "watch"]
+
+---
+# ClusterRoleBinding to associate the ClusterRole with the kubewatch ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ingress-helper-kubewatch-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-helper-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: kubewatch
+    namespace: ingress-helper
+
+---
+# ClusterRoleBinding to associate the ClusterRole with the default ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ingress-helper-default-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-helper-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: ingress-helper
