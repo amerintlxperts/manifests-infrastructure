@@ -22,7 +22,7 @@ spec:
         operator: "Equal"
         value: "true"
         effect: "NoSchedule"
-    nodeSelector: # Selector to ensure pods are scheduled on the desired nodes
+    nodeSelector:
       system-pool: "true"
     affinity: # Additional affinity rules
       nodeAffinity:
